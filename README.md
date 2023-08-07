@@ -1,4 +1,5 @@
 Welcome to the AirBnB clone project!
+
 Learning Objectives:
 	General
 	How to create a Python package
