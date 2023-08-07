@@ -1,7 +1,6 @@
 Welcome to the AirBnB clone project!
 
 Learning Objectives:
-	General
 	How to create a Python package
 	How to create a command interpreter in Python using the cmd module
 	What is Unit testing and how to implement it in a large project
