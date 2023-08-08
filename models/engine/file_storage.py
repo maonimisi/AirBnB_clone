@@ -11,6 +11,11 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
+    def __init__(self):
+        """init method for FileStorage class
+        """
+        pass
+
     def all(self):
         """Returns __objects dictionary"""
         # TODO: should this be a copy()?
