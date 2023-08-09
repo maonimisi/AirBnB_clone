@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Base class for all models of hbnb clone"""
 
 import uuid
 from datetime import datetime
@@ -13,9 +14,9 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """
         Initialization of base instance
-        Args:
+        args:
             - *args: list of argument
-            - **kwargs dictionary of key, value arguments
+            - **kwargs: dictionary of key, value pairs
         """
 
         if kwargs is not None and kwargs != {}:
@@ -36,12 +37,10 @@ class BaseModel:
 
     def __str__(self):
         """str method for BaseModel Class
-
             Return:
                 string (str): string descriptor for BaseModel Class
         """
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id,
-                                     self.__dict__)
+        return (f"[{self.__class.__name__}] ({self.id}) {self.__dict__}")
 
     def save(self):
         """Updates the updated_at attribute
@@ -51,7 +50,8 @@ class BaseModel:
         storage.save()
 
     def to_dict(self):
-        """Returns a dictionary representation of an instance."""
+        """Returns a dictionary representation of an instance.\
+        It contains all the information of the instance"""
 
         my_dict = self.__dict__.copy()
         my_dict["__class__"] = type(self).__name__
