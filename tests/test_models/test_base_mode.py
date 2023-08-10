@@ -15,7 +15,7 @@ class TestBaseModel(unittest.TestCase):
 
     def tearDown(self):
         """Teardown method that runs after each test."""
-        storage.reset()
+        storage.reload()
 
     def test_attributes(self):
         """Test if BaseModel attributes are set correctly."""

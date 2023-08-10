@@ -5,6 +5,7 @@ import unittest
 from datetime import datetime
 from models.amenity import Amenity
 from models import storage
+from models.base_model import BaseModel
 
 
 class TestAmenity(unittest.TestCase):
@@ -15,7 +16,7 @@ class TestAmenity(unittest.TestCase):
 
     def tearDown(self):
         """Teardown method that runs after each test."""
-        storage.reset()
+        storage.reload()
 
     def test_inheritance(self):
         """Test if Amenity inherits from BaseModel."""
