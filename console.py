@@ -13,6 +13,7 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 
+
 class HBNBCommand(cmd.Cmd):
     """This module contains the entry point to the command interpreter"""
     prompt = "(hbnb) "
