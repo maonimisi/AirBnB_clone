@@ -42,6 +42,25 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, line):
         """Prints the string instance based on the class name"""
+        if not line:
+            print("** class name missing **")
+            return
+        args = line.split()
+        command = args[0]
+        if command not in self.MODELS:
+            print("** class doesn't exist **")
+            return
+        if len(args) < 2:
+            print("** instance id missing **")
+            return
+
+        instance_id = args[1]
+        key = (f"{command}.{instance_id})"
+        all_objects = BaseModel.all()
+        if key in all_objects:
+            print(all_objects[key])
+        else:
+            print("** no instance found **")
 
     def do_destroy(self, line):
         """Deletes an instance based on the class name and id"""
