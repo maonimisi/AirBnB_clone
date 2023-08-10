@@ -3,6 +3,7 @@
 
 import cmd
 import json
+import sys
 from models import storage
 from models.base_model import BaseModel
 
@@ -145,4 +146,8 @@ class HBNBCommand(cmd.Cmd):
 
 
 if __name__ == "__main__":
-    HBNBCommand().  cmdloop()
+    if sys.stdin.isatty() and sys.stdout.isatty():
+        HBNBCommand().cmdloop()
+    else:
+        with sys.stdin as input_file:
+            HBNBCommand(stdin=input_file).cmdloop()
