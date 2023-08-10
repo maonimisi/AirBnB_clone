@@ -6,13 +6,25 @@ import json
 import sys
 from models import storage
 from models.base_model import BaseModel
-
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 class HBNBCommand(cmd.Cmd):
     """This module contains the entry point to the command interpreter"""
     prompt = "(hbnb) "
-    MODELS = ['BaseModel', 'User', 'Place', 'State', 'City',
-              'Amenity', 'Review']
+    MODELS = {
+        "City": City,
+        "User": User,
+        "Place": Place,
+        "State": State,
+        "Review": Review,
+        "Amenity": Amenity,
+        "BaseModel": BaseModel,
+        }
 
     def do_EOF(self, line):
         """Exits the console"""
@@ -37,12 +49,13 @@ class HBNBCommand(cmd.Cmd):
         else:
             args = line.split()
             command = args[0]
-            if command not in self.MODELS:
-                print("** class doesn't exist **")
-            else:
-                new_instance = self.MODELS[command]()
+            model = self.MODELS.get(command)
+            if model:
+                new_instance = model()
                 new_instance.save()
                 print(new_instance.id)
+            else:
+                print("** class doesn't exist **")
 
     def do_show(self, line):
         """Prints the string instance based on the class name"""
@@ -95,7 +108,8 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             all_objects = storage.all()
             for key, instance_id in all_objects.items():
-                print(instance_id)
+                if instance_id.__class__.__name__ == command:
+                    print(instance_id)
         else:
             command = args[0]
             if command not in self.MODELS:
@@ -123,7 +137,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         instance_id = args[1]
-        key = f"{class_name}.{instance_id}"
+        key = f"{command}.{instance_id}"
         all_objects = storage.all()
         if key not in all_objects:
             print("** no instance found **")
