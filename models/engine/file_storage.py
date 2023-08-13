@@ -1,13 +1,14 @@
 #!/usr/bin/python3
-"""Module for FileStorage class."""
-import os
+"""
+FileStorage that serializes instances to a JSON file and
+deserializes JSON file to instances:
+"""
 import json
-import datetime
 
 
 class FileStorage:
 
-    """Class for serializtion and deserialization of base classes."""
+    """Class for serializtion and deserialization of base classes"""
     __file_path = "file.json"
     __objects = {}
 
@@ -16,27 +17,32 @@ class FileStorage:
 
     def all(self):
         """
-        Returns __objects dictionary
+        Returns a dictionary containing all the stored objects
         """
-        return FileStorage.__objects
+        return type(self).__objects
 
     def new(self, obj):
-        """
-        Sets new obj in __objects dictionary
-        """
-        key = "{}.{}".format(type(obj).__name__, obj.id)
-        FileStorage.__objects[key] = obj
+        '''
+        Add a new object, obj, to __objects, which is the dictionary of
+            all stored objects
+
+        Args:
+        obj(object): The object to be added to the dictionary of stored objects
+        '''
+        type(self).__objects[f'{type(obj).__name__}.{obj.id}'] = obj.to_dict()
 
     def save(self):
-        """Serialzes __objects to JSON file."""
-        with open(FileStorage.__file_path, "w", encoding="utf-8") as file:
-            data = {k: v.to_dict() for k, v in Filestorage.__objects.items()}
-            json.dump(data, file)
+        '''
+        Serialize the current content of __object into a json file with
+        the file path __file_path
+        '''
+        with open(type(self).__file_path, mode='w', encoding='UTF8') as json_file:
+            json.dump(type(self).__objects, json_file)
 
     def reload(self):
-        """
-        Deserializes JSON file into __objects.
-        """
+        '''
+        Deserialize the content of the json file into the __objects dictionary
+        '''
         try:
             with open(f'{type(self).__file_path}', mode='r', encoding='UTF8')\
                  as json_file:
