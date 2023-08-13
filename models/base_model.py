@@ -1,65 +1,56 @@
 #!/usr/bin/python3
-
-'''
-This module implements the base model class from which every
-other class is created.
-It defines all the fundamental features of all classes in this project.
-'''
+"""
+Module for BaseModel class
+"""
 
 import uuid
 from datetime import datetime
-from . import storage
+from models import storage
 
 
 class BaseModel:
-    '''
-    Define the base model class
+    """
+    BaseModel that defines all common attributes/methods for other classes
+    """
 
-    Attributes:
-    id(str): the unique identifier of an instance
-    created_at(datetime): the date and time an instance is created
-    updated_at(datetime): the date and time an instance is updated
-    '''
+    def __init__(self, *args, **kwargs):
+        """
+        Initialization of base instance
+        args:
+            - *args: list of arguments (not used in this implementation)
+            - **kwargs: dictionary of key, value pairs
+        """
     def __init__(self, *args, **kwargs):
         if kwargs is not None and len(kwargs.keys()) > 0:
             fmt = '%Y-%m-%dT%H:%M:%S.%f'
-            for key, val in kwargs.items():
+            for key, value in kwargs.items():
                 if key == '__class__':
                     continue
                 if key == 'created_at':
-                    self.created_at = datetime.strptime(val, fmt)
+                    self.created_at = datetime.strptime(value, fmt)
                 elif key == 'updated_at':
-                    self.updated_at = datetime.strptime(val, fmt)
+                    self.updated_at = datetime.strptime(value, fmt)
                 else:
-                    exec(f'self.{key} = val')
+                    exec(f'self.{key} = value')
+
         else:
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = self.created_at
+            self.created_at = self.updated_at = datetime.now()
             storage.new(self)
 
     def save(self):
-        """
-        The public instance attribute updated_at has
-        been updated with the current datetime.
-        """
+        """Updates the updated_at attribute with the current datetime."""
         self.updated_at = datetime.now()
         storage.save()
 
     def to_dict(self):
-        """
-        The fuction returns a dictionary that contains all the keys
-        and values from __dict__ attribute of instance
-
-        Return:
-        dictionary(dict): A dictionary object
-        that includes the contents of __dict__
-        """
-        dictionary = self.__dict__.copy()
-        dictionary["created_at"] = str(self.created_at.isoformat())
-        dictionary["updated_at"] = str(self.updated_at.isoformat())
-        dictionary["__class__"] = self.__class__.__name__
-        return dictionary
+        """Returns a dictionary representation of an instance."""
+        my_dict = self.__dict__.copy()
+        my_dict["created_at"] = str(self.created_at.isoformat())
+        my_dict["updated_at"] = str(self.updated_at.isoformat())
+        my_dict["__class__"] = self.__class__.__name__
+        return my_dict
 
     def __str__(self):
+        """String representation for BaseModel instance"""
         return f'[{type(self).__name__}] ({self.id}) {self.__dict__}'
