@@ -39,10 +39,6 @@ class HBNBCommand(cmd.Cmd):
         """states what happens when a line is empty"""
         pass
 
-    def postloop(self):
-        """gives a new line after exicting the console"""
-        print()
-
     def do_create(self, line):
         """TO create an instance of the base model"""
         args = line.split()
@@ -182,8 +178,4 @@ class HBNBCommand(cmd.Cmd):
 
 
 if __name__ == "__main__":
-    if sys.stdin.isatty() and sys.stdout.isatty():
-        HBNBCommand().cmdloop()
-    else:
-        with sys.stdin as input_file:
-            HBNBCommand(stdin=input_file).cmdloop()
+    HBNBCommand().cmdloop()
