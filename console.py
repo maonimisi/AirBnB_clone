@@ -106,27 +106,29 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
     def do_all(self, line):
-        """Prints all instances based or not on the class name"""
+        """Prints all instances based on the class name or all instances"""
         args = line.split()
         if not args:
+            print("** class name missing **")
+            return
+
+        class_name = args[0]
+        if class_name == "all":
             all_objects = storage.all()
-            instance_list = []
-            for key, instance_id in all_objects.items():
-                if instance_id.__class__.__name__ == command:
-                    instance_list.append(str(instance_id))
-            print(instance_list)  # Here
+            instances = [
+                str(instance) for key, instance in all_objects.items()
+            ]
+            print(instances)
+        elif class_name in self.MODELS:
+            all_objects = storage.all()
+            instances = [
+                str(instance) for key, instance in all_objects.items()
+                if instance.__class__.__name__ == class_name
+            ]
+            print(instances)
         else:
-            command = args[0]
-            if command not in self.MODELS:
-                print("** class doesn't exist **")
-                return
-            all_objects = storage.all()
-            instance_list = []
-            for key, instance_id in all_objects.items():
-                if instance_id.__class__.__name__ == command:
-                    instance_list.append(str(instance_id))
-            print(instance_list)
- 
+            print("** class doesn't exist **")
+
     def do_update(self, line):
         """Updates an instance based on the class name and id"""
         args = line.split()
