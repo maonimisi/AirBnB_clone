@@ -1,5 +1,10 @@
 #!/usr/bin/python3
-"""Base class for all models of hbnb clone"""
+
+'''
+This module implements the base model class from which every
+other class is created.
+It defines all the fundamental features of all classes in this project.
+'''
 
 import uuid
 from datetime import datetime
@@ -7,17 +12,14 @@ from . import storage
 
 
 class BaseModel:
-    """
-    BaseModel that defines all common attributes/methods for other classes
-    """
+    '''
+    Define the base model class
 
-    def __init__(self, *args, **kwargs):
-        """
-        Initialization of base instance
-        args:
-            - *args: list of arguments (not used in this implementation)
-            - **kwargs: dictionary of key, value pairs
-        """
+    Attributes:
+    id(str): the unique identifier of an instance
+    created_at(datetime): the date and time an instance is created
+    updated_at(datetime): the date and time an instance is updated
+    '''
     def __init__(self, *args, **kwargs):
         if kwargs is not None and len(kwargs.keys()) > 0:
             fmt = '%Y-%m-%dT%H:%M:%S.%f'
