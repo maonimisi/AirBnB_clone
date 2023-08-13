@@ -21,16 +21,15 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         if kwargs is not None and len(kwargs.keys()) > 0:
             fmt = '%Y-%m-%dT%H:%M:%S.%f'
-            for key, value in kwargs.items():
+            for key, val in kwargs.items():
                 if key == '__class__':
                     continue
                 if key == 'created_at':
-                    self.created_at = datetime.strptime(value, fmt)
+                    self.created_at = datetime.strptime(val, fmt)
                 elif key == 'updated_at':
-                    self.updated_at = datetime.strptime(value, fmt)
+                    self.updated_at = datetime.strptime(val, fmt)
                 else:
-                    exec(f'self.{key} = value')
-
+                    exec(f'self.{key} = val')
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
@@ -38,18 +37,27 @@ class BaseModel:
             storage.new(self)
 
     def save(self):
-        """Updates the updated_at attribute with the current datetime."""
+        """
+        The public instance attribute updated_at has
+        been updated with the current datetime.
+        """
         self.updated_at = datetime.now()
         storage.save()
 
     def to_dict(self):
-        """Returns a dictionary representation of an instance."""
-        my_dict = self.__dict__.copy()
-        my_dict["created_at"] = str(self.created_at.isoformat())
-        my_dict["updated_at"] = str(self.updated_at.isoformat())
-        my_dict["__class__"] = self.__class__.__name__
-        return my_dict
+        """
+        The fuction returns a dictionary that contains all the keys
+        and values from __dict__ attribute of instance
+
+        Return:
+        dictionary(dict): A dictionary object
+        that includes the contents of __dict__
+        """
+        dictionary = self.__dict__.copy()
+        dictionary["created_at"] = str(self.created_at.isoformat())
+        dictionary["updated_at"] = str(self.updated_at.isoformat())
+        dictionary["__class__"] = self.__class__.__name__
+        return dictionary
 
     def __str__(self):
-        """String representation for BaseModel instance"""
         return f'[{type(self).__name__}] ({self.id}) {self.__dict__}'
