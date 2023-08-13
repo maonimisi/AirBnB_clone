@@ -41,7 +41,7 @@ class FileStorage:
         Args:
         obj(object): The object to be added to the dictionary of stored objects
         """
-        my_dict = obj.to_dict()
+        dictionary = obj.to_dict()
         key = "{}.{}".format(dictionary["__class__"], str(obj.id))
         FileStorage.__objects[key] = obj
 
