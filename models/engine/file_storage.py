@@ -27,8 +27,8 @@ class FileStorage:
         all stored objects
 
         Args:
-            obj (BaseModel): The object to be added to the dictionary
-            of stored objects
+            obj (BaseModel): The object to be added to the dictionary of
+            stored objects
         """
         key = f"{obj.__class__.__name__}.{obj.id}"
         self.__objects[key] = obj
@@ -37,9 +37,9 @@ class FileStorage:
         """
         Serialize the current content of __objects into a JSON file
         """
-        dictionary = {key: obj.to_dict() for key, obj in self.__objects.items()}
+        my_dict = {key: obj.to_dict() for key, obj in self.__objects.items()}
         with open(self.__file_path, 'w', encoding='utf-8') as file:
-            json.dump(dictionary, file)
+            json.dump(my_dict, file)
 
     def reload(self):
         """
