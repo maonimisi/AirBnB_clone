@@ -1,41 +1,66 @@
 #!/usr/bin/env pytihon3
-from models.state import State
+
+
 import unittest
-"""
-Unit test cases for the the user class
-"""
+from datetime import datetime
+from models.state import State
+from models import storage
+from models.base_model import BaseModel
 
 
-class TestUserClass(unittest.TestCase):
-    """
-    Test for user class models in the file
-    storage engine
-    """
+class TestState(unittest.TestCase):
 
     def setUp(self):
-        """
-        setup the user class instance for the test cases
-        """
+        """Setup method that runs before each test."""
         self.state = State()
 
-    def test_class_attr(self):
-        """
-        Test the class atrriute
-        """
-        self.assertTrue(hasattr(State, "name"))
+    def tearDown(self):
+        """Teardown method that runs after each test."""
+        storage.reload()
 
-    def test_str_rep(self):
-        """
-        Test for string representation of user object
-        """
-        self.assertEqual(self.state.__str__(),
-                         "[State] ({}) {}".format(self.state.id,
-                                                  self.state.__dict__))
+    def test_inheritance(self):
+        """Test if State inherits from BaseModel."""
+        self.assertIsInstance(self.state, BaseModel)
 
-    def test_for_inheritedMethod(self):
-        """
-        Test for method inherited from the super class
-        """
-        state_attr = dir(State)
-        self.assertTrue("save" in state_attr)
-        self.assertTrue("to_dict" in state_attr)
+    def test_attributes(self):
+        """Test if State attributes are set correctly."""
+        self.assertEqual(self.state.name, "")
+        self.assertIsNotNone(self.state.id)
+        self.assertIsNotNone(self.state.created_at)
+        self.assertIsNotNone(self.state.updated_at)
+
+    def test_created_at_type(self):
+        """Test if created_at attribute is of datetime type."""
+        self.assertIsInstance(self.state.created_at, datetime)
+
+    def test_updated_at_type(self):
+        """Test if updated_at attribute is of datetime type."""
+        self.assertIsInstance(self.state.updated_at, datetime)
+
+    def test_save_method(self):
+        """Test if save method updates the updated_at attribute."""
+        old_updated_at = self.state.updated_at
+        self.state.save()
+        new_updated_at = self.state.updated_at
+        self.assertNotEqual(old_updated_at, new_updated_at)
+
+    def test_to_dict_method(self):
+        """Test if to_dict method returns a dictionary representation."""
+        state_dict = self.state.to_dict()
+        self.assertEqual(state_dict['__class__'], 'State')
+        self.assertIsInstance(state_dict['created_at'], str)
+        self.assertIsInstance(state_dict['updated_at'], str)
+
+    def test_from_dict_method(self):
+        """Test if from_dict method recreates an instance from a dictionary."""
+        state_dict = self.state.to_dict()
+        new_instance = State(**state_dict)
+        self.assertIsInstance(new_instance, State)
+        self.assertEqual(self.state.id, new_instance.id)
+        self.assertEqual(self.state.created_at, new_instance.created_at)
+        self.assertEqual(self.state.updated_at, new_instance.updated_at)
+        self.assertEqual(self.state.name, new_instance.name)
+
+if __name__ == '__main__':
+    unittest.main()
+
