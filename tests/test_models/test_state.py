@@ -61,6 +61,6 @@ class TestState(unittest.TestCase):
         self.assertEqual(self.state.updated_at, new_instance.updated_at)
         self.assertEqual(self.state.name, new_instance.name)
 
+
 if __name__ == '__main__':
     unittest.main()
-

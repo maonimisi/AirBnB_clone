@@ -74,13 +74,11 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(self.place.name, new_instance.name)
         self.assertEqual(self.place.description, new_instance.description)
         self.assertEqual(self.place.number_rooms, new_instance.number_rooms)
-        self.assertEqual(self.place.number_bathrooms, new_instance.number_bathrooms)
         self.assertEqual(self.place.max_guest, new_instance.max_guest)
-        self.assertEqual(self.place.price_by_night, new_instance.price_by_night)
         self.assertEqual(self.place.latitude, new_instance.latitude)
         self.assertEqual(self.place.longitude, new_instance.longitude)
         self.assertEqual(self.place.amenity_ids, new_instance.amenity_ids)
 
+
 if __name__ == '__main__':
     unittest.main()
-

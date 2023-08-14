@@ -7,6 +7,7 @@ from models.review import Review
 from models import storage
 from models.base_model import BaseModel
 
+
 class TestReview(unittest.TestCase):
 
     def setUp(self):
@@ -64,6 +65,6 @@ class TestReview(unittest.TestCase):
         self.assertEqual(self.review.user_id, new_instance.user_id)
         self.assertEqual(self.review.text, new_instance.text)
 
+
 if __name__ == '__main__':
     unittest.main()
-
