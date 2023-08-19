@@ -6,6 +6,8 @@
 	border: 1px solid #dddddd;
 	border-radius: 4px;
 }
+
+/*Button Style*/
 .filters button {
 	background: #ff5a5f;
 	border-radius: 4px;
@@ -17,6 +19,8 @@
 	font-size: 18px;
 	margin: 12px 30px;
 }
+
+/*Mouse Hover Style*/
 .filter button:hover {
 	background-color: rgba(255, 90, 95, .9);
-}
+
