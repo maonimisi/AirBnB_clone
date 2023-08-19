@@ -1,0 +1,50 @@
+/*Filters Style*/
+.filters {
+	background-color: #ffffff;
+	height: 70px;
+	width: 100%;
+	border: 1px solid #dddddd;
+	border-radius: 4px;
+}
+
+/*locations and amenities*/
+.locations, .amenities {
+    display: inline-block;
+    height: 100%;
+    width: 25%;
+}
+/*location*/
+.locations{
+    border-right: 1px solid #dddddd;
+}
+.locations h3, .amenities h3, .locations h4, .amenities h4 {
+	margin: 0;
+	margin-top: 10px;
+	margin-left: 40px;
+}
+
+.locations h3, .amenities h3 {
+	font-weight: 600;
+}
+
+.locations h4, .amenities h4 {
+	font-weight: 400;
+	font-size: 14px;
+}
+
+/*Button Style*/
+.filters button {
+	background: #ff5a5f;
+	border-radius: 4px;
+	border: none;
+	color: #ffffff;
+	float: right;
+	height: 48px;
+	width: 20%;
+	font-size: 18px;
+	margin: 12px 30px;
+}
+
+/*Mouse Hover Style*/
+.filters button:hover {
+	background-color: rgba(255, 90, 95, .9);
